@@ -10,10 +10,19 @@ class Product(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     archived = models.BooleanField(default=False)
 
+    # @property
+    # def description_short(self) -> str:
+    #     if len(self.description) < 56:
+    #         return self.description
+    #     return self.description[:56] + "..."
+
     class Meta:
         ordering = ("name", "price")
         # db_table = "gadgets"
         # verbose_names_plural = 'products'
+
+    def __str__(self) -> str:
+        return f"Product:(pk={self.pk}, name={self.name!r})"
 
 
 class Order(models.Model):
