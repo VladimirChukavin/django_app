@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "shopapp.apps.ShopappConfig",
+    "requestdataapp.apps.RequestdataappConfig",
 ]
 
 MIDDLEWARE = [
@@ -48,6 +49,9 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "requestdataapp.middlewares.useragent_middleware.set_useragent_on_request_middleware",
+    "requestdataapp.middlewares.count_request_middleware.CountRequestsMiddleware",
+    "requestdataapp.middlewares.throttling_middleware.ThrottlingMiddleware",
 ]
 
 ROOT_URLCONF = "training_django_project.urls"
