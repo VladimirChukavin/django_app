@@ -49,9 +49,9 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
-    "requestdataapp.middlewares.useragent_middleware.set_useragent_on_request_middleware",
-    "requestdataapp.middlewares.count_request_middleware.CountRequestsMiddleware",
-    "requestdataapp.middlewares.throttling_middleware.ThrottlingMiddleware",
+    # "requestdataapp.middlewares.useragent_middleware.set_useragent_on_request_middleware",
+    # "requestdataapp.middlewares.count_request_middleware.CountRequestsMiddleware",
+    # "requestdataapp.middlewares.throttling_middleware.ThrottlingMiddleware",
 ]
 
 ROOT_URLCONF = "training_django_project.urls"
