@@ -21,4 +21,8 @@ Products List
     <p style="color:red; font-size=20px;">No products yet!</p>
     {% endif %}
 </p>
+
+<p>
+    <a href="{% url 'shopapp:create_product' %}">Add new product.</a><br/>
+</p>
 {% endblock %}

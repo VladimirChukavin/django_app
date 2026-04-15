@@ -9,10 +9,11 @@ Upload file
 
 <form method="post" enctype="multipart/form-data">
     {% csrf_token %}
-    <p>
-        <label for="file-id">Select file:</label>
-        <input id="file-id" type="file" name="myfile">
-    </p>
+<!--    <p>-->
+<!--        <label for="file-id">Select file:</label>-->
+<!--        <input id="file-id" type="file" name="myfile">-->
+<!--    </p>-->
+    {{ form.as_p }}
     <button type='submit'>Upload</button>
 </form>
 

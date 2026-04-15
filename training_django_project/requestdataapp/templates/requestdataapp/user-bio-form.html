@@ -9,18 +9,19 @@ User bio form
 
 <form method="post">
     {% csrf_token %}
-    <p>
-        <label for="name-id">Name:</label>
-        <input id="name-id" type="text" name="name" maxlength="100">
-    </p>
-    <p>
-        <label for="age-id">Age:</label>
-        <input id="age-id" type="number" name="age" min="1" max="100">
-    </p>
-    <p>
-        <label for="bio-id">About me:</label>
-        <textarea id="bio-id" name="bio" rows=5 cols=42 placeholder ="Enter your text here..."></textarea>
-    </p>
+<!--    <p>-->
+<!--        <label for="name-id">Name:</label>-->
+<!--        <input id="name-id" type="text" name="name" maxlength="100">-->
+<!--    </p>-->
+<!--    <p>-->
+<!--        <label for="age-id">Age:</label>-->
+<!--        <input id="age-id" type="number" name="age" min="1" max="100">-->
+<!--    </p>-->
+<!--    <p>-->
+<!--        <label for="bio-id">About me:</label>-->
+<!--        <textarea id="bio-id" name="bio" rows=5 cols=42 placeholder ="Enter your text here..."></textarea>-->
+<!--    </p>-->
+    {{ form.as_p }}
     <button type='submit'>Submit</button>
 </form>
 
