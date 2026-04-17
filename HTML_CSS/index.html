@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;0,700;1,400;1,700&display=swap"
+          rel="stylesheet">
+    <link href="style.css" rel="stylesheet">
+    <title>Title</title>
+</head>
+<body>
+<header class="header">
+    <div class="header__wrapper container">
+        <nav class="header__nav nav">
+            <ul class="nav__list">
+                <li class="nav__item"><a href="#">Услуги</a></li>
+                <li class="nav__item"><a href="#">Портфолио</a></li>
+                <li class="nav__item"><a href="#">Стоимость</a></li>
+            </ul>
+        </nav>
+        <div class="header__contacts contacts">
+            <span class="contacts__phone-number">+7 (499) 995-55-77</span>
+            <button class="contacts__order-phone-call button open-popup">Заказать звонок</button>
+        </div>
+    </div>
+</header>
+<main class="main">
+    <section class="main__developer developer">
+        <div class="developer__wrapper container">
+            <div class="developer__info">
+                <h1 class="developer__name">Дмитрий Алексеев</h1>
+                <p class="developer__specialization"><span>Frontend-разработчик</span><span>и веб-верстальщик</span></p>
+                <a class="developer__link button open-popup" href="#">Узнать больше</a>
+            </div>
+        </div>
+    </section>
+    <section class="main__services services">
+        <div class="services__wrapper container">
+            <h2 class="services__title">Что я делаю</h2>
+            <ul class="services__list">
+                <li class="services__item services__item--landing">
+                    <p class="services__info">Вёрстка лендинг&#8211;страниц <br>и сайтов любой сложности</p>
+                </li>
+                <li class="services__item services__item--adaptive">
+                    <p class="services__info">Адаптивная вёрстка под <br><span>все браузеры и устройства</span></p>
+                </li>
+                <li class="services__item services__item--frontend">
+                    <p class="services__info">Frontend-разработка <br>и <span>программирование</span></p>
+                </li>
+                <li class="services__item services__item--fixing">
+                    <p class="services__info">Исправление и доработка существующей вёрстки</p>
+                </li>
+            </ul>
+            <a class="services__link button open-popup" href="#">Узнать стоимость</a>
+        </div>
+    </section>
+    <section class="main__work-examples work-examples">
+        <div class="work-examples__wrapper container">
+            <h2 class="work-examples__title">Примеры работ</h2>
+            <div class="work-examples__sites sites">
+                <figure class="sites__card">
+                    <p class="sites__picture">
+                        <img src="images/example1.png" width="502" alt="Сайт психолога Веры Антоновой">
+                    </p>
+                    <figcaption class="sites__info">Сайт психолога Веры Антоновой</figcaption>
+                </figure>
+                <figure class="sites__card">
+                    <p class="sites__picture">
+                        <img src="images/example2.png" width="502" alt="Сайт магазина детской одежды">
+                    </p>
+                    <figcaption class="sites__info">Сайт магазина детской одежды</figcaption>
+                </figure>
+                <figure class="sites__card">
+                    <p class="sites__picture">
+                        <img src="images/example3.png" width="502" alt="Сайт магазина Рыболов">
+                    </p>
+                    <figcaption class="sites__info">Сайт магазина &#171;Рыболов&#187;</figcaption>
+                </figure>
+            </div>
+            <a class="work-examples__link button open-popup" href="#">Заказать проект</a>
+        </div>
+    </section>
+    <section class="main__promo promo">
+        <div class="container">
+            <div class="promo__wrapper">
+                <h2 class="promo__title">
+                    Адаптивная вёрстка под все
+                    <span>устройства и браузеры</span> <br>
+                    <span>от 1000 &#8381; всего за 4 часа.*</span>
+                </h2>
+                <p class="promo__note">* Срок и стоимость могут отличаться от заявленных и рассчитываются
+                    <br>индивидуально, в зависимости от сложности задач.</p>
+            </div>
+        </div>
+    </section>
+</main>
+<footer class="footer">
+    <div class="footer__wrapper container">
+        <div class="footer__nav footer-nav">
+            <ul class="footer-nav__list">
+                <li class="footer-nav__item"><a href="#">Услуги</a></li>
+                <li class="footer-nav__item"><a href="#">Портфолио</a></li>
+                <li class="footer-nav__item"><a href="#">Стоимость</a></li>
+            </ul>
+        </div>
+        <address class="footer__contacts">
+            <a class="footer__mail" href="mailto:dmitry@alekseev.com">dmitry@alekseev.com</a>
+            <span class="footer__phone-number">+7 (499) 995-77-55</span>
+        </address>
+        <div class="footer__right">
+            <button class="footer__order-phone-call button open-popup">Заказать звонок</button>
+            <ul class="footer__social social">
+                <li class="social__item">
+                    <a class="social__link social__link--fb" href="#"></a>
+                </li>
+                <li class="social__item">
+                    <a class="social__link social__link--vk" href="#"></a>
+                </li>
+                <li class="social__item">
+                    <a class="social__link social__link--yt" href="#"></a>
+                </li>
+                <li class="social__item">
+                    <a class="social__link social__link--tg" href="#"></a>
+                </li>
+                <li class="social__item">
+                    <a class="social__link social__link--insta" href="#"></a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</footer>
+
+<div class="popup">
+    <div class="popup__container">
+        <form class="popup__form form" method="post">
+            <div class="form__wrapper">
+                <p>
+                    <label for="name">Имя</label>
+                    <input class="form__input" type="text" id="name" name="name" placeholder="Введите ваше имя">
+                </p>
+                <p>
+                    <label for="mail">Email</label>
+                    <input class="form__input" type="email" id="mail" name="email"
+                           placeholder="email@example.com">
+                </p>
+                <p>
+                    <input class="form__submit" type="submit" value="Отправить">
+                </p>
+            </div>
+        </form>
+    </div>
+</div>
+<script src="script.js"></script>
+</body>
+</html>
