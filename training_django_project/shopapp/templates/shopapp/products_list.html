@@ -11,7 +11,7 @@ Products List
     <ul>
         {% for product in products %}
         <li>
-            <p>Name: {{ product.name }}</p>
+            <p>Name: <a href="{% url 'shopapp:product_details' pk=product.pk %}">{{ product.name }}</a></p>
             <p>Price: {{ product.price }}</p>
             <p>Discount: {% firstof product.discount "No discount" %}</p>
         </li>
