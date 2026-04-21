@@ -23,4 +23,5 @@ urlpatterns = [
     # path("shop/", include("shopapp.urls")),
     path("", include("shopapp.urls")),
     path("req/", include("requestdataapp.urls")),
+    path("auth/", include("myauth.urls")),
 ]
