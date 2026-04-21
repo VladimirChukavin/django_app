@@ -1,6 +1,11 @@
 from timeit import default_timer
 from datetime import datetime
 
+from django.contrib.auth.mixins import (
+    LoginRequiredMixin,
+    PermissionRequiredMixin,
+    UserPassesTestMixin,
+)
 from django.http import HttpResponse, HttpRequest, HttpResponseRedirect
 from django.shortcuts import render, redirect, reverse, get_object_or_404
 from django.urls import reverse_lazy
@@ -42,17 +47,36 @@ class ProductsListView(ListView):
     context_object_name = "products"
 
 
-class ProductCreateView(CreateView):
+class ProductCreateView(UserPassesTestMixin, CreateView):
+    def test_func(self):
+        # return self.request.user.is_superuser
+        return self.request.user.has_perm("shopapp.add_product")
+
     model = Product
     # fields = ("name", "price", "description", "discount")
     form_class = ProductForm
     success_url = reverse_lazy("shopapp:products_list")
 
+    def form_valid(self, form):
+        form.instance.created_by = self.request.user
+        return super().form_valid(form=form)
 
-class ProductUpdateView(UpdateView):
+
+class ProductUpdateView(UserPassesTestMixin, UpdateView):
     model = Product
     fields = ("name", "price", "description", "discount")
     template_name_suffix = "_update_form"
+
+    def test_func(self):
+        product = self.get_object()
+
+        if self.request.user.is_superuser:
+            return True
+
+        return (
+            self.request.user.has_perm("shopapp.change_product")
+            and product.created_by == self.request.user
+        )
 
     def get_success_url(self):
         return reverse(
@@ -78,12 +102,13 @@ class ProductDeleteView(DeleteView):
         return HttpResponseRedirect(success_url)
 
 
-class OrdersListView(ListView):
+class OrdersListView(LoginRequiredMixin, ListView):
     template_name = "shopapp/orders_list.html"
     queryset = Order.objects.select_related("user").prefetch_related("products")
 
 
-class OrderDetailsView(DetailView):
+class OrderDetailsView(PermissionRequiredMixin, DetailView):
+    permission_required = ["shopapp.view_order"]
     template_name = "shopapp/order_details.html"
     queryset = Order.objects.select_related("user").prefetch_related("products")
 
