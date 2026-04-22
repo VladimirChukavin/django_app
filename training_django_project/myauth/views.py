@@ -1,8 +1,9 @@
 from django.contrib.auth.views import LogoutView
-from django.http import HttpRequest, HttpResponse
+from django.http import HttpRequest, HttpResponse, JsonResponse
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.urls import reverse, reverse_lazy
+from django.views import View
 
 
 def login_view(request: HttpRequest) -> HttpResponse:
@@ -43,9 +44,9 @@ def set_cookie_view(request: HttpRequest) -> HttpResponse:
     return response
 
 
-def get_cookies_view(request: HttpRequest) -> HttpResponse:
+def get_cookie_view(request: HttpRequest) -> HttpResponse:
     value = request.COOKIES.get("one", "default_value")
-    return HttpResponse(f"Value of cookie one : {value!r}")
+    return HttpResponse(f"Value of cookie one: {value!r}")
 
 
 def set_session_view(request: HttpRequest) -> HttpResponse:
@@ -56,3 +57,8 @@ def set_session_view(request: HttpRequest) -> HttpResponse:
 def get_session_view(request: HttpRequest) -> HttpResponse:
     value = request.session.get("spice", "default_value")
     return HttpResponse(f"Session value: {value!r}")
+
+
+class FooBarView(View):
+    def get(self, request: HttpRequest) -> JsonResponse:
+        return JsonResponse({"foo": 12, "bar": True})
