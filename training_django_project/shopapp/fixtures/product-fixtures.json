@@ -1,0 +1,122 @@
+[
+  {
+    "model": "shopapp.product",
+    "pk": 1,
+    "fields": {
+      "name": "Laptop",
+      "description": "Maxime non doloremque ab nemo",
+      "price": "1999.00",
+      "discount": 0,
+      "created_at": "2026-04-10T10:02:54.088Z",
+      "archived": false
+    }
+  },
+  {
+    "model": "shopapp.product",
+    "pk": 2,
+    "fields": {
+      "name": "Desktop",
+      "description": "",
+      "price": "2599.00",
+      "discount": 10,
+      "created_at": "2026-04-10T10:02:54.088Z",
+      "archived": false
+    }
+  },
+  {
+    "model": "shopapp.product",
+    "pk": 3,
+    "fields": {
+      "name": "Smartphone",
+      "description": "Maxime non doloremque ab nemo nisi a fuga magnam pariatur voluptatem quos. Id reiciendis possimus in doloribus tempore enim impedit ad eveniet deserunt veritatis, expedita aperiam iste enim animi dolorum reiciendis hic voluptatum ipsa reprehenderit, nihil dolorem corrupti repellat libero iure expedita quis nemo accusamus fuga, laudantium illum quas dolorem at sed odit perferendis ad consequuntur, quibusdam ipsam quidem dolores atque inventore facere facilis velit error dolorum? Saepe sint aspernatur porro vitae placeat nostrum a, dicta iste veritatis tempora provident, culpa quam earum laborum, quod neque vero eos provident atque ipsum explicabo commodi ex, eius molestiae modi suscipit iusto ipsam accusantium odit illum quasi.",
+      "price": "999.00",
+      "discount": 25,
+      "created_at": "2026-04-10T10:02:54.088Z",
+      "archived": false
+    }
+  },
+  {
+    "model": "shopapp.product",
+    "pk": 4,
+    "fields": {
+      "name": "Tablet",
+      "description": "Super device",
+      "price": "3999.00",
+      "discount": 0,
+      "created_at": "2026-04-14T10:41:17.976Z",
+      "archived": false
+    }
+  },
+  {
+    "model": "shopapp.product",
+    "pk": 5,
+    "fields": {
+      "name": "Phone2",
+      "description": "phone 2 is better than phone 1\r\nthis is great phone!",
+      "price": "1234.00",
+      "discount": 0,
+      "created_at": "2026-04-14T10:48:26.594Z",
+      "archived": false
+    }
+  },
+  {
+    "model": "shopapp.product",
+    "pk": 6,
+    "fields": {
+      "name": "Phone 3",
+      "description": "phone 3",
+      "price": "399.35",
+      "discount": 12,
+      "created_at": "2026-04-14T11:19:49.041Z",
+      "archived": true
+    }
+  },
+  {
+    "model": "shopapp.product",
+    "pk": 7,
+    "fields": {
+      "name": "Desktop 2",
+      "description": "desktop 2",
+      "price": "4500.00",
+      "discount": 15,
+      "created_at": "2026-04-14T11:21:56.589Z",
+      "archived": false
+    }
+  },
+  {
+    "model": "shopapp.product",
+    "pk": 9,
+    "fields": {
+      "name": "Laptop (new)",
+      "description": "something about laptop",
+      "price": "8686.00",
+      "discount": 14,
+      "created_at": "2026-04-18T12:33:02.616Z",
+      "archived": false
+    }
+  },
+  {
+    "model": "shopapp.product",
+    "pk": 10,
+    "fields": {
+      "name": "Tablet (new)",
+      "description": "tablet 2 text about this gadget",
+      "price": "1235.00",
+      "discount": 20,
+      "created_at": "2026-04-19T11:57:21.411Z",
+      "archived": true
+    }
+  },
+  {
+    "model": "shopapp.product",
+    "pk": 11,
+    "fields": {
+      "name": "Tablet (new)",
+      "description": "A new tablet!",
+      "price": "4555.00",
+      "discount": 5,
+      "created_at": "2026-04-21T14:11:38.926Z",
+      "archived": false
+    }
+  }
+]
