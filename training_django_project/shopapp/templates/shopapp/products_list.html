@@ -14,6 +14,7 @@ Products List
             <p>Name: <a href="{% url 'shopapp:product_details' pk=product.pk %}">{{ product.name }}</a></p>
             <p>Price: {{ product.price }}</p>
             <p>Discount: {% firstof product.discount "No discount" %}</p>
+            <p>Created by: {{ product.created_by }}</p>
         </li>
         {% endfor %}
     </ul>
@@ -22,7 +23,9 @@ Products List
     {% endif %}
 </p>
 
+{% if perms.shopapp.add_product %}
 <p>
     <a href="{% url 'shopapp:create_product' %}">Add new product.</a><br/>
 </p>
+{% endif %}
 {% endblock %}
