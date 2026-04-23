@@ -3,11 +3,10 @@ from datetime import datetime
 
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.http import HttpResponse, HttpRequest, HttpResponseRedirect, JsonResponse
-from django.shortcuts import render, redirect, reverse, get_object_or_404
+from django.shortcuts import render, reverse
 from django.urls import reverse_lazy
 from django.views import View
 from django.views.generic import (
-    TemplateView,
     ListView,
     DetailView,
     CreateView,
@@ -19,7 +18,6 @@ from shopapp.models import Product, Order
 from .forms import ProductForm, OrderForm
 
 
-# ============================= Class-based views =================================
 class IndexView(View):
     def get(self, request: HttpRequest) -> HttpResponse:
         products = [
@@ -138,84 +136,9 @@ class OrdersExportView(UserPassesTestMixin, View):
                 "pk": order.pk,
                 "delivery_address": order.delivery_address,
                 "promocode": order.promocode,
-                "user": order.user,
-                "products": order.products,
+                "user": order.user.pk,
+                "products": [product.pk for product in order.products.all()],
             }
             for order in orders
         ]
         return JsonResponse({"orders": orders_data})
-
-
-# ========================== Function-based views ====================================
-# class ProductDetailsView(View):
-#     def get(self, request: HttpRequest, pk: int) -> HttpResponse:
-#         # product = Product.objects.get(pk=pk)
-#         product = get_object_or_404(Product, pk=pk)
-#         context = {
-#             "product": product,
-#         }
-#         return render(request, "shopapp/product-details.html", context=context)
-
-
-# def index(request: HttpRequest) -> HttpResponse:
-#     products = [("Laptop", 40000), ("Desktop", 60000), ("Smartphone", 100000)]
-#     context = {
-#         "time_running": default_timer(),
-#         "products": products,
-#         "date": datetime.now(),
-#     }
-#
-#     return render(request, "shopapp/shop-index.html", context=context)
-
-
-# def get_products_list(request: HttpRequest) -> HttpResponse:
-#     context = {
-#         "products": Product.objects.all(),
-#     }
-#     return render(request, "shopapp/products-list.html", context=context)
-
-
-# def create_product(request: HttpRequest) -> HttpResponse:
-#     if request.method == "POST":
-#         form = ProductForm(request.POST)
-#         if form.is_valid():
-#             # name = form.cleaned_data['name']
-#             # price = form.cleaned_data["price"]
-#             # Product.objects.create(name=name, price=price)
-#             # Product.objects.create(**form.cleaned_data)
-#             form.save()
-#             url = reverse("shopapp:products_list")
-#             return redirect(url)
-#     else:
-#         form = ProductForm()
-#
-#     context = {
-#         "form": form,
-#     }
-#     return render(request, "shopapp/create-product.html", context=context)
-
-
-# def get_orders_list(request: HttpRequest) -> HttpResponse:
-#     context = {
-#         "orders": Order.objects.select_related("user")
-#         .prefetch_related("products")
-#         .all(),
-#     }
-#     return render(request, "shopapp/orders-list.html", context=context)
-
-
-# def create_order(request: HttpRequest) -> HttpResponse:
-#     if request.method == "POST":
-#         form = OrderForm(request.POST)
-#
-#         if form.is_valid():
-#             form.save()
-#             url = reverse("shopapp:orders_list")
-#             return redirect(url)
-#     else:
-#         form = OrderForm()
-#
-#     context = {
-#         "form": form,
-#     }
-#     return render(request, "shopapp/create-order.html", context=context)

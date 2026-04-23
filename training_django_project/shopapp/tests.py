@@ -13,8 +13,7 @@ from .models import Product, Order
 
 class AddTwoNumbersTestCase(TestCase):
     def test_add_two_numbers(self):
-        # result = add_two_numbers(3, 5)
-        result = add_two_numbers(30, 5)
+        result = add_two_numbers(3, 5)
         self.assertEqual(result, 8)
 
 
@@ -43,15 +42,9 @@ class ProductDetailsViewTestCase(TestCase):
     def setUpClass(cls):
         cls.product = Product.objects.create(name="Something")
 
-    # def setUp(self) -> None:
-    #     self.product = Product.objects.create(name="Something")
-
     @classmethod
     def tearDownClass(cls) -> None:
         cls.product.delete()
-
-    # def tearDown(self) -> None:
-    #     self.product.delete()
 
     def test_product_details_view(self):
         response = self.client.get(
@@ -139,6 +132,7 @@ class OrderListViewTestCase(TestCase):
 class OrderDetailViewTestCase(TestCase):
     @classmethod
     def setUpClass(cls):
+        super().setUpClass()
         cls.user = User.objects.create_user(username="testuser", password="123456")
         content_type = ContentType.objects.get_for_model(Order)
         permission = Permission.objects.get(
@@ -150,6 +144,7 @@ class OrderDetailViewTestCase(TestCase):
     @classmethod
     def tearDownClass(cls):
         cls.user.delete()
+        super().tearDownClass()
 
     def setUp(self) -> None:
         self.client.force_login(self.user)
@@ -181,6 +176,7 @@ class OrdersExportTestCase(TestCase):
 
     @classmethod
     def setUpClass(cls):
+        super().setUpClass()
         cls.user = User.objects.create_user(
             username="testuser", password="123456", is_staff=True
         )
@@ -188,6 +184,7 @@ class OrdersExportTestCase(TestCase):
     @classmethod
     def tearDownClass(cls):
         cls.user.delete()
+        super().tearDownClass()
 
     def setUp(self) -> None:
         self.client.force_login(self.user)
@@ -202,8 +199,8 @@ class OrdersExportTestCase(TestCase):
                 "pk": order.pk,
                 "delivery_address": order.delivery_address,
                 "promocode": order.promocode,
-                "user": order.user,
-                "products": order.products,
+                "user": order.user.pk,
+                "products": [product.pk for product in order.products.all()],
             }
             for order in orders
         ]

@@ -33,10 +33,7 @@
       "is_staff": true,
       "is_active": true,
       "date_joined": "2026-04-21T11:33:18Z",
-      "groups": [
-        3,
-        4
-      ],
+      "groups": [],
       "user_permissions": [
         4
       ]
@@ -112,9 +109,7 @@
       "is_staff": false,
       "is_active": true,
       "date_joined": "2026-04-21T12:15:56.235Z",
-      "groups": [
-        3
-      ],
+      "groups": [],
       "user_permissions": [
         4
       ]
