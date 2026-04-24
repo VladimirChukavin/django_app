@@ -14,7 +14,7 @@ from django.views.generic import (
     DeleteView,
 )
 
-from shopapp.models import Product, Order
+from shopapp.models import Product, Order, ProductImage
 from .forms import ProductForm, OrderForm
 
 
@@ -50,7 +50,8 @@ class ProductCreateView(CreateView):
 
 class ProductUpdateView(UpdateView):
     model = Product
-    fields = ("name", "price", "description", "discount")
+    # fields = ("name", "price", "description", "discount", "preview")
+    form_class = ProductForm
     template_name_suffix = "_update_form"
 
     def get_success_url(self):
@@ -59,10 +60,22 @@ class ProductUpdateView(UpdateView):
             kwargs={"pk": self.object.pk},
         )
 
+    def form_valid(self, form):
+        response = super().form_valid(form)
+        files = form.cleaned_data["image"]
+        for image in files:
+            ProductImage.objects.create(
+                product=self.object,
+                image=image,
+            )
+
+        return response
+
 
 class ProductDetailsView(DetailView):
     template_name = "shopapp/product_details.html"
-    model = Product
+    # model = Product
+    queryset = Product.objects.prefetch_related("images")
     context_object_name = "product"
 
 
