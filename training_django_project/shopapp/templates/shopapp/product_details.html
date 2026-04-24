@@ -6,10 +6,25 @@ Product #{{ product.pk }}
 
 {% block content %}
 <h1>Product {{ product.name }}</h1>
+{% if product.preview %}
+<img src="{{ product.preview.url }}" width="350" alt='{{ product.preview.name }}'>
+{% endif %}
 <p>Description: {{ product.description }}</p>
 <p>Price: {{ product.price }}</p>
 <p>Discount: {{ product.discount }}</p>
 <p>Archived: {{ product.archived }}</p>
+
+<h3>Images</h3>
+<div>
+    {% for img in product.images.all %}
+    <figure>
+        <img src="{{ img.image.url }}" alt="{{ img.image.name }}">
+        <figcaption>{{ img.description }}</figcaption>
+    </figure>
+    {% empty %}
+    <p>No images uploaded yet</p>
+    {% endfor %}
+</div>
 <br>
 <p>
     <a href="{% url 'shopapp:product_update' pk=product.pk %}">Update product</a><br/>
