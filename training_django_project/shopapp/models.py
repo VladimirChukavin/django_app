@@ -1,5 +1,6 @@
 from django.contrib.auth.models import User
 from django.db import models
+from django.utils.translation import gettext_lazy as _
 
 
 def product_preview_directory_path(instance: "Product", filename: str) -> str:
@@ -39,7 +40,8 @@ class Product(models.Model):
     class Meta:
         ordering = ("name", "price")
         # db_table = "gadgets"
-        # verbose_names_plural = 'products'
+        verbose_name = _("Product")
+        verbose_name_plural = _("Products")
 
     def __str__(self) -> str:
         return f"Product:(pk={self.pk}, name={self.name!r})"
@@ -60,3 +62,7 @@ class Order(models.Model):
     user = models.ForeignKey(User, on_delete=models.PROTECT)
     products = models.ManyToManyField(Product, related_name="orders")
     receipt = models.FileField(null=True, upload_to="orders/receipts/")
+
+    class META:
+        verbose_name = _("Order")
+        verbose_name_plural = _("Orders")
