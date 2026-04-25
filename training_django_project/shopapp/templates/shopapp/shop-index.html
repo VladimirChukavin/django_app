@@ -6,17 +6,20 @@
 <p>Time running: {{ time_running }}</p>
 <p>{% lorem %}</p>
 <section>{% lorem 3 p random %}</section>
-<p>
-<ul>
-    {% for name, price in products %}
-    <li>{{ name }} - {{ price|floatformat:'g' }} &#8381;</li>
-    {% if name|length == 7 %}
-    <span>This is good</span>
-    {% endif %}
-    {% empty %}
-    <li>No Products Available.</li>
-    {% endfor %}
-</ul>
-</p>
+<div>
+    <ul>
+        {% for name, price in products %}
+        <li>{{ name }} - {{ price|floatformat:'g' }} &#8381;</li>
+        {% if name|length == 7 %}
+        <span>This is good</span>
+        {% endif %}
+        {% empty %}
+        <li>No Products Available.</li>
+        {% endfor %}
+    </ul>
+</div>
+<div>
+    You have {{ items }} cherr{{ items|pluralize:'y,ies' }}
+</div>
 <p>Date: {{ date|date:"Y-m-d" }}</p>
 {% endblock %}
