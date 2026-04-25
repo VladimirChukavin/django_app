@@ -28,6 +28,7 @@ class IndexView(View):
         context = {
             "time_running": default_timer(),
             "products": products,
+            "items": 0,
             "date": datetime.now(),
         }
 
