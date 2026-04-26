@@ -13,9 +13,55 @@ from django.views.generic import (
     UpdateView,
     DeleteView,
 )
+from rest_framework.viewsets import ModelViewSet
+from rest_framework.filters import SearchFilter, OrderingFilter
+from django_filters.rest_framework import DjangoFilterBackend
 
 from shopapp.models import Product, Order, ProductImage
 from .forms import ProductForm, OrderForm
+from .serializers import ProductSerializer, OrderSerializer
+
+
+class ProductViewSet(ModelViewSet):
+    queryset = Product.objects.all()
+    serializer_class = ProductSerializer
+    filter_backends = (
+        DjangoFilterBackend,
+        SearchFilter,
+        OrderingFilter,
+    )
+    search_fields = [
+        "name",
+        "description",
+    ]
+    filterset_fields = [
+        "name",
+        "description",
+        "price",
+        "discount",
+        "archived",
+    ]
+    ordering_fields = [
+        "name",
+        "price",
+        "discount",
+    ]
+
+
+class OrderViewSet(ModelViewSet):
+    queryset = Order.objects.select_related("user").prefetch_related("products")
+    serializer_class = OrderSerializer
+    filter_backends = (
+        DjangoFilterBackend,
+        OrderingFilter,
+    )
+    filterset_fields = [
+        "delivery_address",
+        "products",
+    ]
+    ordering_fields = [
+        "created_at",
+    ]
 
 
 class IndexView(View):
