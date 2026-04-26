@@ -1,34 +1,48 @@
 {% extends 'shopapp/base.html' %}
 
+{% load i18n %}
+
 {% block title %}
-Products List
+{% translate 'Products List' %}
 {% endblock %}
 
 {% block content %}
-<h1>Products:</h1>
-<p>
+<h1>{% translate 'Products' %}:</h1>
+<div>
     {% if products %}
+    {% blocktranslate count product_count=products|length %}
+    <p>There is only one product</p>
+    {% plural %}
+    <p>There are {{ product_count }} products</p>
+    {% endblocktranslate %}
     <ul>
         {% for product in products %}
         <li>
-            <p>Name: <a href="{% url 'shopapp:product_details' pk=product.pk %}">{{ product.name }}</a></p>
-            <p>Price: {{ product.price }}</p>
-            <p>Discount: {% firstof product.discount "No discount" %}</p>
-            <p>Created by: {{ product.created_by }}</p>
+            <p>{% translate 'Name' context 'product name' %}: <a href="{% url 'shopapp:product_details' pk=product.pk %}">{{ product.name }}</a></p>
+            <p>{% translate 'Price' %}: {{ product.price }}</p>
+            {% translate 'No discount' as no_discount %}
+            <p>{% translate 'Discount' %}: {% firstof product.discount no_discount %}</p>
+            <p>{% translate 'Created by' %}: {{ product.created_by }}</p>
             {% if product.preview %}
             <img src="{{ product.preview.url }}" width="150" alt='{{ product.preview.name }}'>
             {% endif %}
         </li>
         {% endfor %}
     </ul>
-    {% else %}
-    <p style="color:red; font-size=20px;">No products yet!</p>
+    {% if perms.shopapp.add_product %}
+    <p>
+        <a href="{% url 'shopapp:create_product' %}">{% translate 'Add new product' %}</a><br/>
+    </p>
     {% endif %}
-</p>
+    {% else %}
+    {% url 'shopapp:create_product' as add_product_url %}
+    {% blocktranslate %}
+    <p style="color:red; font-size=20px;">No products yet</p>
+    <p>
+        <a href="{{ add_product_url }}">Add new one</a><br/>
+    </p>
+    {% endblocktranslate %}
+    {% endif %}
+</div>
 
-{% if perms.shopapp.add_product %}
-<p>
-    <a href="{% url 'shopapp:create_product' %}">Add new product.</a><br/>
-</p>
-{% endif %}
 {% endblock %}
