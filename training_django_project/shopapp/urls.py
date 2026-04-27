@@ -16,9 +16,10 @@ from .views import (
     OrderUpdateView,
     OrderDeleteView,
     OrdersExportView,
-    ProductViewSet,
-    OrderViewSet,
+    # ProductViewSet,
+    # OrderViewSet,
 )
+from .api import ProductViewSet, OrderViewSet
 
 app_name = "shopapp"
 
