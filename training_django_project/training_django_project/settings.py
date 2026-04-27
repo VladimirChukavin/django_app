@@ -40,9 +40,12 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "rest_framework",
+    "django_filters",
     "shopapp.apps.ShopappConfig",
     "requestdataapp.apps.RequestdataappConfig",
     "myauth.apps.MyauthConfig",
+    "myapiapp.apps.MyapiappConfig",
 ]
 
 MIDDLEWARE = [
@@ -139,3 +142,10 @@ MEDIA_ROOT = BASE_DIR / "uploads"
 # LOGIN_REDIRECT_URL = "/admin/"
 LOGIN_REDIRECT_URL = reverse_lazy("myauth:about_me")
 LOGIN_URL = reverse_lazy("myauth:login")
+
+# REST settings
+REST_FRAMEWORK = {
+    "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.PageNumberPagination",
+    "PAGE_SIZE": 10,
+    "DEFAULT_FILTER_BACKENDS": ["django_filters.rest_framework.DjangoFilterBackend"],
+}
