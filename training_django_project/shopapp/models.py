@@ -18,6 +18,12 @@ def product_images_directory_path(instance: "ProductImage", filename: str) -> st
 
 
 class Product(models.Model):
+    """
+    Модель Product представляет товар в магазине
+
+    Заказы тут: :model:`shopapp.Order`
+    """
+
     name = models.CharField(max_length=100)
     description = models.TextField(null=False, blank=True)
     price = models.DecimalField(decimal_places=2, max_digits=8, default=0)
@@ -48,6 +54,10 @@ class Product(models.Model):
 
 
 class ProductImage(models.Model):
+    """
+    Модели Image для хранения изображений товаров.
+    """
+
     product = models.ForeignKey(
         Product, on_delete=models.CASCADE, related_name="images"
     )
@@ -56,6 +66,12 @@ class ProductImage(models.Model):
 
 
 class Order(models.Model):
+    """
+    Модель Order представляет заказы в магазине
+
+    Товары здесь: :model:`shopapp.Product`
+    """
+
     delivery_address = models.TextField(null=False, blank=True)
     promocode = models.CharField(max_length=20, null=False, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
