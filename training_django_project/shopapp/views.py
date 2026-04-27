@@ -1,29 +1,69 @@
 from timeit import default_timer
 from datetime import datetime
 
-from django.contrib.auth.mixins import (
-    LoginRequiredMixin,
-    PermissionRequiredMixin,
-    UserPassesTestMixin,
-)
-from django.http import HttpResponse, HttpRequest, HttpResponseRedirect
-from django.shortcuts import render, redirect, reverse, get_object_or_404
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.http import HttpResponse, HttpRequest, HttpResponseRedirect, JsonResponse
+from django.shortcuts import render, reverse
 from django.urls import reverse_lazy
 from django.views import View
 from django.views.generic import (
-    TemplateView,
     ListView,
     DetailView,
     CreateView,
     UpdateView,
     DeleteView,
 )
+from rest_framework.viewsets import ModelViewSet
+from rest_framework.filters import SearchFilter, OrderingFilter
+from django_filters.rest_framework import DjangoFilterBackend
 
-from shopapp.models import Product, Order
+from shopapp.models import Product, Order, ProductImage
 from .forms import ProductForm, OrderForm
+from .serializers import ProductSerializer, OrderSerializer
 
 
-# ============================= Class-based views =================================
+class ProductViewSet(ModelViewSet):
+    queryset = Product.objects.all()
+    serializer_class = ProductSerializer
+    filter_backends = (
+        DjangoFilterBackend,
+        SearchFilter,
+        OrderingFilter,
+    )
+    search_fields = [
+        "name",
+        "description",
+    ]
+    filterset_fields = [
+        "name",
+        "description",
+        "price",
+        "discount",
+        "archived",
+    ]
+    ordering_fields = [
+        "name",
+        "price",
+        "discount",
+    ]
+
+
+class OrderViewSet(ModelViewSet):
+    queryset = Order.objects.select_related("user").prefetch_related("products")
+    serializer_class = OrderSerializer
+    filter_backends = (
+        DjangoFilterBackend,
+        OrderingFilter,
+    )
+    filterset_fields = [
+        "delivery_address",
+        "products",
+    ]
+    ordering_fields = [
+        "created_at",
+    ]
+
+
 class IndexView(View):
     def get(self, request: HttpRequest) -> HttpResponse:
         products = [
@@ -34,6 +74,7 @@ class IndexView(View):
         context = {
             "time_running": default_timer(),
             "products": products,
+            "items": 0,
             "date": datetime.now(),
         }
 
@@ -64,7 +105,8 @@ class ProductCreateView(UserPassesTestMixin, CreateView):
 
 class ProductUpdateView(UserPassesTestMixin, UpdateView):
     model = Product
-    fields = ("name", "price", "description", "discount")
+    # fields = ("name", "price", "description", "discount", "preview")
+    form_class = ProductForm
     template_name_suffix = "_update_form"
 
     def test_func(self):
@@ -84,10 +126,22 @@ class ProductUpdateView(UserPassesTestMixin, UpdateView):
             kwargs={"pk": self.object.pk},
         )
 
+    def form_valid(self, form):
+        response = super().form_valid(form)
+        files = form.cleaned_data["image"]
+        for image in files:
+            ProductImage.objects.create(
+                product=self.object,
+                image=image,
+            )
+
+        return response
+
 
 class ProductDetailsView(DetailView):
     template_name = "shopapp/product_details.html"
-    model = Product
+    # model = Product
+    queryset = Product.objects.prefetch_related("images")
     context_object_name = "product"
 
 
@@ -100,6 +154,21 @@ class ProductDeleteView(DeleteView):
         self.object.archived = True
         self.object.save()
         return HttpResponseRedirect(success_url)
+
+
+class ProductDataExportView(View):
+    def get(self, request: HttpRequest) -> JsonResponse:
+        products = Product.objects.order_by("pk").all()
+        products_data = [
+            {
+                "pk": product.pk,
+                "name": product.name,
+                "price": product.price,
+                "archived": product.archived,
+            }
+            for product in products
+        ]
+        return JsonResponse({"products": products_data})
 
 
 class OrdersListView(LoginRequiredMixin, ListView):
@@ -136,76 +205,20 @@ class OrderDeleteView(DeleteView):
     success_url = reverse_lazy("shopapp:orders_list")
 
 
-# ========================== Function-based views ====================================
-# class ProductDetailsView(View):
-#     def get(self, request: HttpRequest, pk: int) -> HttpResponse:
-#         # product = Product.objects.get(pk=pk)
-#         product = get_object_or_404(Product, pk=pk)
-#         context = {
-#             "product": product,
-#         }
-#         return render(request, "shopapp/product-details.html", context=context)
+class OrdersExportView(UserPassesTestMixin, View):
+    def test_func(self):
+        return self.request.user.is_staff
 
-
-# def index(request: HttpRequest) -> HttpResponse:
-#     products = [("Laptop", 40000), ("Desktop", 60000), ("Smartphone", 100000)]
-#     context = {
-#         "time_running": default_timer(),
-#         "products": products,
-#         "date": datetime.now(),
-#     }
-#
-#     return render(request, "shopapp/shop-index.html", context=context)
-
-
-# def get_products_list(request: HttpRequest) -> HttpResponse:
-#     context = {
-#         "products": Product.objects.all(),
-#     }
-#     return render(request, "shopapp/products-list.html", context=context)
-
-
-# def create_product(request: HttpRequest) -> HttpResponse:
-#     if request.method == "POST":
-#         form = ProductForm(request.POST)
-#         if form.is_valid():
-#             # name = form.cleaned_data['name']
-#             # price = form.cleaned_data["price"]
-#             # Product.objects.create(name=name, price=price)
-#             # Product.objects.create(**form.cleaned_data)
-#             form.save()
-#             url = reverse("shopapp:products_list")
-#             return redirect(url)
-#     else:
-#         form = ProductForm()
-#
-#     context = {
-#         "form": form,
-#     }
-#     return render(request, "shopapp/create-product.html", context=context)
-
-
-# def get_orders_list(request: HttpRequest) -> HttpResponse:
-#     context = {
-#         "orders": Order.objects.select_related("user")
-#         .prefetch_related("products")
-#         .all(),
-#     }
-#     return render(request, "shopapp/orders-list.html", context=context)
-
-
-# def create_order(request: HttpRequest) -> HttpResponse:
-#     if request.method == "POST":
-#         form = OrderForm(request.POST)
-#
-#         if form.is_valid():
-#             form.save()
-#             url = reverse("shopapp:orders_list")
-#             return redirect(url)
-#     else:
-#         form = OrderForm()
-#
-#     context = {
-#         "form": form,
-#     }
-#     return render(request, "shopapp/create-order.html", context=context)
+    def get(self, request: HttpRequest) -> JsonResponse:
+        orders = Order.objects.order_by("pk").all()
+        orders_data = [
+            {
+                "pk": order.pk,
+                "delivery_address": order.delivery_address,
+                "promocode": order.promocode,
+                "user": order.user.pk,
+                "products": [product.pk for product in order.products.all()],
+            }
+            for order in orders
+        ]
+        return JsonResponse({"orders": orders_data})

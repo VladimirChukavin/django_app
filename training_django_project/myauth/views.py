@@ -4,18 +4,55 @@ from django.contrib.auth.decorators import (
     user_passes_test,
 )
 from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.contrib.auth.models import User
 from django.contrib.auth.views import LogoutView
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.urls import reverse, reverse_lazy
-from django.views.generic import TemplateView, CreateView
+from django.views import View
+from django.views.generic import (
+    TemplateView,
+    CreateView,
+    UpdateView,
+    ListView,
+    DetailView,
+)
+from django.utils.translation import gettext_lazy as _, ngettext
 
+from .forms import ProfileAvatarForm
 from .models import Profile
 
 
-class AboutMeView(TemplateView):
+class HelloView(View):
+    welcome_message = _("welcome hello world")
+
+    def get(self, request: HttpRequest) -> HttpResponse:
+        items_str = request.GET.get("items", 0)
+        items = int(items_str)
+        products_line = ngettext(
+            "one product",
+            "{count} products",
+            items,
+        )
+        products_line = products_line.format(count=items)
+        return HttpResponse(f"<h1>{self.welcome_message}</h1><h2>{products_line}</h2>")
+
+
+class AboutMeView(LoginRequiredMixin, UpdateView):
+    model = Profile
     template_name = "myauth/about-me.html"
+    form_class = ProfileAvatarForm
+    success_url = reverse_lazy("myauth:about_me")
+
+    def get_object(self) -> Profile:
+        return self.request.user.profile
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["profile"] = self.get_object()
+        return context
 
 
 class RegisterView(CreateView):
@@ -37,6 +74,41 @@ class RegisterView(CreateView):
         login(request=self.request, user=user)
 
         return response
+
+
+class UsersListView(LoginRequiredMixin, ListView):
+    model = User
+    template_name = "myauth/users_list.html"
+    context_object_name = "users"
+    queryset = User.objects.select_related("profile").all()
+
+
+class UserDetailView(LoginRequiredMixin, DetailView):
+    model = User
+    template_name = "myauth/user_detail.html"
+    context_object_name = "user_obj"
+
+    def get_queryset(self):
+        return User.objects.select_related("profile")
+
+
+class UserUpdateProfileView(UserPassesTestMixin, UpdateView):
+    model = Profile
+    template_name = "myauth/user_update.html"
+    form_class = ProfileAvatarForm
+    context_object_name = "profile"
+
+    def get_success_url(self):
+        return reverse("myauth:user_detail", kwargs={"pk": self.object.user.pk})
+
+    def test_func(self):
+        profile = self.get_object()
+        return self.request.user.is_staff or self.request.user == profile.user
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["can_edit"] = self.test_func()
+        return context
 
 
 def login_view(request: HttpRequest) -> HttpResponse:

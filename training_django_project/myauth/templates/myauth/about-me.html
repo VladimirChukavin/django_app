@@ -9,6 +9,20 @@ About me
 
 {% if user.is_authenticated %}
 <h2>Details</h2>
+{% if profile.avatar %}
+<img src="{{ profile.avatar.url }}" width="150" alt='{{ profile.avatar.name }}'>
+{% else %}
+<p>No profile avatar</p>
+{% endif %}
+<div>
+    <p>Update profile avatar:</p>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type='submit'>Update</button>
+    </form>
+</div>
+<hr>
 <p>Username: {{ user.username }}</p>
 <p>First name: {{ user.first_name }}</p>
 <p>Last name: {{ user.last_name }}</p>
@@ -17,5 +31,9 @@ About me
 {% else %}
 <h2>Anonymous user</h2>
 {% endif %}
+
+<p>
+    <a href="{% url 'myauth:users_list' %}">Go to users list</a>
+</p>
 
 {% endblock %}

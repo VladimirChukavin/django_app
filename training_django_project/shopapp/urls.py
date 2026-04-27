@@ -1,4 +1,5 @@
-from django.urls import path
+from django.urls import path, include
+from rest_framework.routers import DefaultRouter
 
 from shopapp import views
 from .views import (
@@ -10,12 +11,20 @@ from .views import (
     OrderDetailsView,
     ProductUpdateView,
     ProductDeleteView,
+    ProductDataExportView,
     OrderCreateView,
     OrderUpdateView,
     OrderDeleteView,
+    OrdersExportView,
+    ProductViewSet,
+    OrderViewSet,
 )
 
 app_name = "shopapp"
+
+routers = DefaultRouter()
+routers.register("products", ProductViewSet)
+routers.register("orders", OrderViewSet)
 
 urlpatterns = [
     # path("", views.index, name="index"),
@@ -24,7 +33,9 @@ urlpatterns = [
     # path("orders/", views.get_orders_list, name="orders_list"),
     # path("orders/create/", views.create_order, name="create_order"),
     path("", IndexView.as_view(), name="index"),
+    path("api/", include(routers.urls)),
     path("products/", ProductsListView.as_view(), name="products_list"),
+    path("products/export/", ProductDataExportView.as_view(), name="products_export"),
     path("products/create/", ProductCreateView.as_view(), name="create_product"),
     path("products/<int:pk>/", ProductDetailsView.as_view(), name="product_details"),
     path(
@@ -34,6 +45,7 @@ urlpatterns = [
         "products/<int:pk>/archive/", ProductDeleteView.as_view(), name="product_delete"
     ),
     path("orders/", OrdersListView.as_view(), name="orders_list"),
+    path("orders/export/", OrdersExportView.as_view(), name="orders_export"),
     path("orders/create/", OrderCreateView.as_view(), name="create_order"),
     path("orders/<int:pk>", OrderDetailsView.as_view(), name="order_details"),
     path("orders/<int:pk>/update/", OrderUpdateView.as_view(), name="order_update"),
