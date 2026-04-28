@@ -1,0 +1,33 @@
+{% extends "blogapp/base.html" %}
+
+{% block title %}
+Articles list
+{% endblock %}
+
+{% block content %}
+<h1>Articles:</h1>
+<div>
+    {% if articles %}
+    <ul>
+        {% for article in articles %}
+        <li>
+            <p>Title: {{ article.title }}</p>
+            <p>Published at: {{ article.pub_date }}</p>
+            <p>Author: {{ article.author.name }}</p>
+            <p>Category: {{ article.category.name }}</p>
+            <p>Tags:</p>
+            <ul>
+                {% for tag in article.tags.all %}
+                <li>{{ tag.name }}</li>
+                {% endfor %}
+            </ul>
+        </li>
+        <br/>
+        {% endfor %}
+    </ul>
+    {% else %}
+    <p style="color:red; font-size=20px;">No articles yet</p>
+    {% endif %}
+</div>
+
+{% endblock %}
