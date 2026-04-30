@@ -24,8 +24,8 @@ class Product(models.Model):
     Заказы тут: :model:`shopapp.Order`
     """
 
-    name = models.CharField(max_length=100)
-    description = models.TextField(null=False, blank=True)
+    name = models.CharField(max_length=100, db_index=True)
+    description = models.TextField(null=False, blank=True, db_index=True)
     price = models.DecimalField(decimal_places=2, max_digits=8, default=0)
     discount = models.PositiveSmallIntegerField(default=0)
     created_at = models.DateTimeField(auto_now_add=True)
