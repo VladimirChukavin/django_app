@@ -7,7 +7,7 @@ class ArticlesListView(ListView):
     template_name = "blogapp/article_list.html"
     queryset = (
         Article.objects.defer("content")
-        .select_related("author")
+        .select_related("author", "category")
         .prefetch_related("tags")
     )
     context_object_name = "articles"
