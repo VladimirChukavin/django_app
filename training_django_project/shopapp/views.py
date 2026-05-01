@@ -4,6 +4,7 @@
 Разные представления для товаров, заказов и пользователей.
 """
 
+import logging
 from timeit import default_timer
 from datetime import datetime
 
@@ -32,6 +33,8 @@ from django.views.generic import (
 from shopapp.models import Product, Order, ProductImage
 from .forms import ProductForm, OrderForm
 
+log = logging.getLogger(__name__)
+
 
 class IndexView(View):
     def get(self, request: HttpRequest) -> HttpResponse:
@@ -46,6 +49,8 @@ class IndexView(View):
             "items": 0,
             "date": datetime.now(),
         }
+        log.debug("Products list: %s", products)
+        log.info("Rendering index page")
 
         return render(request, "shopapp/shop-index.html", context=context)
 
