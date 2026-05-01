@@ -13,7 +13,7 @@ https://docs.djangoproject.com/en/6.0/ref/settings/
 from pathlib import Path
 
 from django.urls import reverse_lazy
-from django.utils.translation import gettext_lazy as _
+from django.utils.translation import gettext_lazy
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -28,7 +28,23 @@ SECRET_KEY = "django-insecure-^n)^a9-p-7ojkj7wr2u!cnn0wx^6*6uirf1k*0)-(9c!*5dcn-
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    "0.0.0.0",
+    "127.0.0.1",
+    "localhost",
+]
+INTERNAL_IPS = [
+    "127.0.0.1",
+]
+
+if DEBUG:
+    import socket
+
+    hostname, _, ips = socket.gethostbyname_ex(socket.gethostname())
+    INTERNAL_IPS.append("10.0.2.2")
+    INTERNAL_IPS.extend(
+        [ip[: ip.rfind(".")] + ".1" for ip in ips],
+    )
 
 
 # Application definition
@@ -40,6 +56,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "debug_toolbar",
     "django.contrib.admindocs",
     "rest_framework",
     "django_filters",
@@ -64,6 +81,7 @@ MIDDLEWARE = [
     # "requestdataapp.middlewares.throttling_middleware.ThrottlingMiddleware",
     "django.middleware.locale.LocaleMiddleware",
     "django.contrib.admindocs.middleware.XViewMiddleware",
+    "debug_toolbar.middleware.DebugToolbarMiddleware",
 ]
 
 ROOT_URLCONF = "training_django_project.urls"
@@ -132,8 +150,8 @@ USE_L10N = True
 LOCALE_PATHS = [BASE_DIR / "locale/"]
 
 LANGUAGES = [
-    ("en", _("English")),
-    ("ru", _("Russian")),
+    ("en", gettext_lazy("English")),
+    ("ru", gettext_lazy("Russian")),
 ]
 
 # Static files (CSS, JavaScript, Images)
@@ -163,24 +181,60 @@ SPECTACULAR_SETTINGS = {
 }
 
 # Logging
+# LOGGING = {
+#     "version": 1,
+#     "filters": {
+#         "require_debug_true": {
+#             "()": "django.utils.log.RequireDebugTrue",
+#         },
+#     },
+#     "handlers": {
+#         "console": {
+#             "level": "DEBUG",
+#             "filters": ["require_debug_true"],
+#             "class": "logging.StreamHandler",
+#         },
+#     },
+#     "loggers": {
+#         "django.db.backends": {
+#             "level": "DEBUG",
+#             "handlers": ["console"],
+#         },
+#     },
+# }
+
+LOGFILE_NAME = BASE_DIR / "log.txt"
+# LOGFILE_SIZE = 400
+LOGFILE_SIZE = 1 * 1024 * 1024
+LOGFILE_COUNT = 3
+
 LOGGING = {
     "version": 1,
-    "filters": {
-        "require_debug_true": {
-            "()": "django.utils.log.RequireDebugTrue",
-        },
+    "disable_existing_loggers": False,
+    "formatters": {
+        "verbose": {
+            "format": "%(asctime)s [%(levelname)s] %(name)s: %(message)s",
+        }
     },
     "handlers": {
         "console": {
-            "level": "DEBUG",
-            "filters": ["require_debug_true"],
             "class": "logging.StreamHandler",
+            "formatter": "verbose",
+        },
+        "logfile": {
+            # 'class': 'logging.handlers.TimedRotatingFileHandler',
+            "class": "logging.handlers.RotatingFileHandler",
+            "filename": LOGFILE_NAME,
+            "maxBytes": LOGFILE_SIZE,
+            "backupCount": LOGFILE_COUNT,
+            "formatter": "verbose",
         },
     },
-    "loggers": {
-        "django.db.backends": {
-            "level": "DEBUG",
-            "handlers": ["console"],
-        },
+    "root": {
+        "handlers": [
+            "console",
+            "logfile",
+        ],
+        "level": "INFO",
     },
 }
