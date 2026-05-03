@@ -13,6 +13,7 @@ from django.contrib.auth.mixins import (
     UserPassesTestMixin,
     PermissionRequiredMixin,
 )
+from django.contrib.syndication.views import Feed
 from django.http import (
     HttpResponse,
     HttpRequest,
@@ -196,3 +197,20 @@ class OrdersExportView(UserPassesTestMixin, View):
             for order in orders
         ]
         return JsonResponse({"orders": orders_data})
+
+
+class LatestProductsFeed(Feed):
+    title = "Products (latest)"
+    description = "Updates on changes and additions products to the shop"
+    link = reverse_lazy("shopapp:products_list")
+
+    def items(self):
+        return Product.objects.filter(archived__isnull=False).order_by("-created_at")[
+            :5
+        ]
+
+    def item_title(self, item: Product):
+        return item.name
+
+    def item_description(self, item: Product):
+        return item.description[:50]
