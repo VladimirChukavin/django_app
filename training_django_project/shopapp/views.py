@@ -13,6 +13,7 @@ from django.contrib.auth.mixins import (
     UserPassesTestMixin,
     PermissionRequiredMixin,
 )
+from django.contrib.auth.models import User
 from django.contrib.syndication.views import Feed
 from django.http import (
     HttpResponse,
@@ -20,9 +21,13 @@ from django.http import (
     HttpResponseRedirect,
     JsonResponse,
 )
-from django.shortcuts import render, reverse
+from django.shortcuts import render, reverse, get_object_or_404
 from django.urls import reverse_lazy
+
+# from django.utils.decorators import method_decorator
 from django.views import View
+
+# from django.views.decorators.cache import cache_page
 from django.views.generic import (
     ListView,
     DetailView,
@@ -30,6 +35,7 @@ from django.views.generic import (
     UpdateView,
     DeleteView,
 )
+from django.core.cache import cache
 
 from shopapp.models import Product, Order, ProductImage
 from .forms import ProductForm, OrderForm
@@ -38,6 +44,7 @@ log = logging.getLogger(__name__)
 
 
 class IndexView(View):
+    # @method_decorator(cache_page(30))
     def get(self, request: HttpRequest) -> HttpResponse:
         products = [
             ("Laptop", 40000),
@@ -52,6 +59,7 @@ class IndexView(View):
         }
         log.debug("Products list: %s", products)
         log.info("Rendering index page")
+        print("shop index context", context)
 
         return render(request, "shopapp/shop-index.html", context=context)
 
@@ -133,16 +141,22 @@ class ProductDeleteView(DeleteView):
 
 class ProductDataExportView(View):
     def get(self, request: HttpRequest) -> JsonResponse:
-        products = Product.objects.order_by("pk").all()
-        products_data = [
-            {
-                "pk": product.pk,
-                "name": product.name,
-                "price": product.price,
-                "archived": product.archived,
-            }
-            for product in products
-        ]
+        cache_key = "products_data_export"
+        products_data = cache.get(cache_key)
+
+        if products_data is None:
+            products = Product.objects.order_by("pk").all()
+            products_data = [
+                {
+                    "pk": product.pk,
+                    "name": product.name,
+                    "price": product.price,
+                    "archived": product.archived,
+                }
+                for product in products
+            ]
+            cache.set(cache_key, products_data, 300)
+
         return JsonResponse({"products": products_data})
 
 
@@ -214,3 +228,54 @@ class LatestProductsFeed(Feed):
 
     def item_description(self, item: Product):
         return item.description[:50]
+
+
+class UserOrdersListView(LoginRequiredMixin, ListView):
+    model = Order
+    template_name = "shopapp/user_orders_list.html"
+    context_object_name = "user_orders_list"
+
+    def get_queryset(self):
+        user_id = self.kwargs.get("user_id")
+        user = get_object_or_404(User, pk=user_id)
+        self.owner = user
+        orders = (
+            Order.objects.select_related("user")
+            .filter(user=user)
+            .prefetch_related("products")
+        )
+        return orders
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["owner"] = self.owner
+        return context
+
+
+class UserOrdersListExportView(View):
+    def get(self, request: HttpRequest, user_id: int) -> JsonResponse:
+        user = get_object_or_404(User, pk=user_id)
+
+        cache_key = f"user_orders_export_{user_id}"
+        orders_data = cache.get(cache_key)
+
+        if orders_data is None:
+            orders = (
+                Order.objects.select_related("user")
+                .filter(user=user)
+                .prefetch_related("products")
+                .order_by("pk")
+            )
+            orders_data = [
+                {
+                    "pk": order.pk,
+                    "delivery_address": order.delivery_address,
+                    "promocode": order.promocode,
+                    "user": order.user.pk,
+                    "products": [product.pk for product in order.products.all()],
+                }
+                for order in orders
+            ]
+            cache.set(cache_key, orders_data, 300)
+
+        return JsonResponse({"orders": orders_data})
