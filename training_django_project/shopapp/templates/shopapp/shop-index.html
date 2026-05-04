@@ -1,11 +1,16 @@
 {% extends 'shopapp/base.html' %}
+{% load cache %}
 
 {% block title %}Shop :: Home{% endblock %}
 {% block content %}
 <h1>Welcome to the Shop!</h1>
 <p>Time running: {{ time_running }}</p>
 <p>{% lorem %}</p>
+
+{% cache 30 lorem %}
 <section>{% lorem 3 p random %}</section>
+{% endcache %}
+
 <div>
     <ul>
         {% for name, price in products %}

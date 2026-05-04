@@ -6,6 +6,8 @@ Models: `Order`, `Product`.
 
 from csv import DictWriter
 from django.http import HttpResponse
+from django.utils.decorators import method_decorator
+from django.views.decorators.cache import cache_page
 from rest_framework.request import Request
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
@@ -51,6 +53,11 @@ class ProductViewSet(ModelViewSet):
         "price",
         "discount",
     ]
+
+    @method_decorator(cache_page(30))
+    def list(self, *args, **kwargs):
+        print("hello products list")
+        return super().list(*args, **kwargs)
 
     @extend_schema(
         summary="Get one product by ID",

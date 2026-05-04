@@ -1,3 +1,5 @@
+from random import random
+
 from django.contrib.auth.decorators import (
     login_required,
     permission_required,
@@ -20,6 +22,7 @@ from django.views.generic import (
     DetailView,
 )
 from django.utils.translation import gettext_lazy as _, ngettext
+from django.views.decorators.cache import cache_page
 
 from .forms import ProfileAvatarForm
 from .models import Profile
@@ -150,9 +153,10 @@ def set_cookie_view(request: HttpRequest) -> HttpResponse:
     return response
 
 
+@cache_page(60)
 def get_cookies_view(request: HttpRequest) -> HttpResponse:
     value = request.COOKIES.get("one", "default_value")
-    return HttpResponse(f"Value of cookie one : {value!r}")
+    return HttpResponse(f"Value of cookie one : {value!r} + {random()}")
 
 
 @permission_required("myauth.view_profile", raise_exception=True)
