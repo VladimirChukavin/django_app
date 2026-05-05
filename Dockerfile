@@ -4,10 +4,12 @@ ENV PYTHONUNBUFFERED=1
 
 WORKDIR /app
 
-COPY requirements.txt .
+RUN pip install --upgrade pip && pip install "poetry==2.4.0"
+RUN poetry config virtualenvs.create false --local
 
-RUN pip install --upgrade pip && pip install -r requirements.txt
-
+COPY poetry.lock pyproject.toml ./
 COPY training_django_project .
+
+RUN poetry install
 
 CMD ["gunicorn", "training_django_project.wsgi:application", "--bind", "0.0.0.0:8000"]
