@@ -59,7 +59,6 @@ class IndexView(View):
         }
         log.debug("Products list: %s", products)
         log.info("Rendering index page")
-        print("shop index context", context)
 
         return render(request, "shopapp/shop-index.html", context=context)
 
