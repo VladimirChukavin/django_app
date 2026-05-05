@@ -1,285 +1,433 @@
 [
 {
-  "model": "blogapp.author",
+  "model": "admin.logentry",
   "pk": 1,
   "fields": {
-    "name": "John Doe",
-    "bio": "American tech blogger and software engineer."
+    "action_time": "2026-04-09T10:01:09.638Z",
+    "user": 1,
+    "content_type": 2,
+    "object_id": "1",
+    "object_repr": "one_group",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
   }
 },
 {
-  "model": "blogapp.author",
+  "model": "admin.logentry",
   "pk": 2,
   "fields": {
-    "name": "Jane Smith",
-    "bio": "Freelance writer focused on lifestyle and wellness."
+    "action_time": "2026-04-09T10:02:22.254Z",
+    "user": 1,
+    "content_type": 2,
+    "object_id": "1",
+    "object_repr": "one_group",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Permissions\"]}}]"
   }
 },
 {
-  "model": "blogapp.author",
+  "model": "admin.logentry",
   "pk": 3,
   "fields": {
-    "name": "Alex Johnson",
-    "bio": "Data scientist and AI enthusiast."
+    "action_time": "2026-04-10T08:50:37.303Z",
+    "user": 1,
+    "content_type": 2,
+    "object_id": "2",
+    "object_repr": "two_group",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
   }
 },
 {
-  "model": "blogapp.author",
+  "model": "admin.logentry",
   "pk": 4,
   "fields": {
-    "name": "Maria Garcia",
-    "bio": "Travel journalist and photographer."
+    "action_time": "2026-04-10T09:11:00.102Z",
+    "user": 1,
+    "content_type": 2,
+    "object_id": "2",
+    "object_repr": "two_group",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Permissions\"]}}]"
   }
 },
 {
-  "model": "blogapp.author",
+  "model": "admin.logentry",
   "pk": 5,
   "fields": {
-    "name": "James Brown",
-    "bio": "Finance expert and stock market analyst."
+    "action_time": "2026-04-11T08:18:36.777Z",
+    "user": 1,
+    "content_type": 7,
+    "object_id": "3",
+    "object_repr": "Product:(pk=3, name='Smartphone')",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Description\"]}}]"
   }
 },
 {
-  "model": "blogapp.category",
-  "pk": 1,
-  "fields": {
-    "name": "Technology"
-  }
-},
-{
-  "model": "blogapp.category",
-  "pk": 2,
-  "fields": {
-    "name": "Lifestyle"
-  }
-},
-{
-  "model": "blogapp.category",
-  "pk": 3,
-  "fields": {
-    "name": "Finance"
-  }
-},
-{
-  "model": "blogapp.tag",
-  "pk": 1,
-  "fields": {
-    "name": "Programming"
-  }
-},
-{
-  "model": "blogapp.tag",
-  "pk": 2,
-  "fields": {
-    "name": "Python"
-  }
-},
-{
-  "model": "blogapp.tag",
-  "pk": 3,
-  "fields": {
-    "name": "Django"
-  }
-},
-{
-  "model": "blogapp.tag",
-  "pk": 4,
-  "fields": {
-    "name": "Travel"
-  }
-},
-{
-  "model": "blogapp.tag",
-  "pk": 5,
-  "fields": {
-    "name": "Health"
-  }
-},
-{
-  "model": "blogapp.tag",
+  "model": "admin.logentry",
   "pk": 6,
   "fields": {
-    "name": "Investing"
+    "action_time": "2026-04-11T08:30:52.043Z",
+    "user": 1,
+    "content_type": 7,
+    "object_id": "1",
+    "object_repr": "Product:(pk=1, name='Laptop')",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Description\"]}}]"
   }
 },
 {
-  "model": "blogapp.tag",
+  "model": "admin.logentry",
   "pk": 7,
   "fields": {
-    "name": "AI"
+    "action_time": "2026-04-11T08:49:25.349Z",
+    "user": 1,
+    "content_type": 4,
+    "object_id": "1",
+    "object_repr": "admin",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"First name\"]}}]"
   }
 },
 {
-  "model": "blogapp.article",
-  "pk": 1,
-  "fields": {
-    "title": "Getting Started with Django",
-    "content": "This is a beginner guide to Django...",
-    "pub_date": "2026-04-18T16:34:53Z",
-    "author": 1,
-    "category": 1,
-    "tags": [
-      1,
-      2,
-      3
-    ]
-  }
-},
-{
-  "model": "blogapp.article",
-  "pk": 2,
-  "fields": {
-    "title": "Healthy Morning Routine",
-    "content": "How to start your day in the best way...",
-    "pub_date": "2026-04-19T16:34:53Z",
-    "author": 2,
-    "category": 2,
-    "tags": [
-      5
-    ]
-  }
-},
-{
-  "model": "blogapp.article",
-  "pk": 3,
-  "fields": {
-    "title": "Machine Learning Basics",
-    "content": "An introduction to ML concepts...",
-    "pub_date": "2026-04-20T16:34:53Z",
-    "author": 3,
-    "category": 1,
-    "tags": [
-      2,
-      7
-    ]
-  }
-},
-{
-  "model": "blogapp.article",
-  "pk": 4,
-  "fields": {
-    "title": "Budgeting for Beginners",
-    "content": "Learn how to manage your personal finances...",
-    "pub_date": "2026-04-21T16:34:53Z",
-    "author": 5,
-    "category": 3,
-    "tags": [
-      6
-    ]
-  }
-},
-{
-  "model": "blogapp.article",
-  "pk": 5,
-  "fields": {
-    "title": "My Trip to Japan",
-    "content": "A travel diary from Tokyo to Kyoto...",
-    "pub_date": "2026-04-22T16:34:53Z",
-    "author": 4,
-    "category": 2,
-    "tags": [
-      4
-    ]
-  }
-},
-{
-  "model": "blogapp.article",
-  "pk": 6,
-  "fields": {
-    "title": "Advanced Python Tricks",
-    "content": "Useful tips and tricks for Python developers...",
-    "pub_date": "2026-04-23T16:34:53Z",
-    "author": 1,
-    "category": 1,
-    "tags": [
-      1,
-      2
-    ]
-  }
-},
-{
-  "model": "blogapp.article",
-  "pk": 7,
-  "fields": {
-    "title": "Investing in ETFs",
-    "content": "Why ETFs are great for long-term growth...",
-    "pub_date": "2026-04-24T16:34:53Z",
-    "author": 5,
-    "category": 3,
-    "tags": [
-      6
-    ]
-  }
-},
-{
-  "model": "blogapp.article",
+  "model": "admin.logentry",
   "pk": 8,
   "fields": {
-    "title": "Django REST Framework Guide",
-    "content": "Building APIs with DRF...",
-    "pub_date": "2026-04-25T16:34:53Z",
-    "author": 1,
-    "category": 1,
-    "tags": [
-      1,
-      3
-    ]
+    "action_time": "2026-04-11T09:19:58.370Z",
+    "user": 1,
+    "content_type": 7,
+    "object_id": "1",
+    "object_repr": "Product:(pk=1, name='Laptop')",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Archived\"]}}]"
   }
 },
 {
-  "model": "blogapp.article",
+  "model": "admin.logentry",
   "pk": 9,
   "fields": {
-    "title": "Mindfulness Meditation",
-    "content": "How to practice mindfulness daily...",
-    "pub_date": "2026-04-26T16:34:53Z",
-    "author": 2,
-    "category": 2,
-    "tags": [
-      5
-    ]
+    "action_time": "2026-04-21T12:43:18.980Z",
+    "user": 1,
+    "content_type": 2,
+    "object_id": "4",
+    "object_repr": "qwerty",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
   }
 },
 {
-  "model": "blogapp.article",
+  "model": "admin.logentry",
   "pk": 10,
   "fields": {
-    "title": "Artificial Intelligence Trends 2025",
-    "content": "What to expect in the next few years...",
-    "pub_date": "2026-04-27T16:34:53Z",
-    "author": 3,
-    "category": 1,
-    "tags": [
-      7
-    ]
+    "action_time": "2026-04-21T12:44:54.957Z",
+    "user": 1,
+    "content_type": 4,
+    "object_id": "2",
+    "object_repr": "sam",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Groups\", \"User permissions\"]}}]"
   }
 },
 {
-  "model": "blogapp.article",
+  "model": "admin.logentry",
   "pk": 11,
   "fields": {
-    "title": "Solo Travel Tips",
-    "content": "Essential advice for solo adventurers...",
-    "pub_date": "2026-04-28T04:34:53Z",
-    "author": 4,
-    "category": 2,
-    "tags": [
+    "action_time": "2026-04-21T12:45:42.002Z",
+    "user": 1,
+    "content_type": 4,
+    "object_id": "2",
+    "object_repr": "sam",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Staff status\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 12,
+  "fields": {
+    "action_time": "2026-04-21T12:58:12.284Z",
+    "user": 1,
+    "content_type": 4,
+    "object_id": "3",
+    "object_repr": "john",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"User permissions\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 13,
+  "fields": {
+    "action_time": "2026-04-21T13:50:34.605Z",
+    "user": 1,
+    "content_type": 4,
+    "object_id": "1",
+    "object_repr": "admin",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"User permissions\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 14,
+  "fields": {
+    "action_time": "2026-04-23T13:19:32.751Z",
+    "user": 1,
+    "content_type": 8,
+    "object_id": "2",
+    "object_repr": "Order object (2)",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Receipt\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 15,
+  "fields": {
+    "action_time": "2026-04-23T14:32:34.974Z",
+    "user": 1,
+    "content_type": 7,
+    "object_id": "2",
+    "object_repr": "Product:(pk=2, name='Desktop')",
+    "action_flag": 2,
+    "change_message": "[{\"added\": {\"name\": \"product image\", \"object\": \"ProductImage object (1)\"}}, {\"added\": {\"name\": \"product image\", \"object\": \"ProductImage object (2)\"}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 16,
+  "fields": {
+    "action_time": "2026-04-23T14:33:06.903Z",
+    "user": 1,
+    "content_type": 7,
+    "object_id": "2",
+    "object_repr": "Product:(pk=2, name='Desktop')",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"name\": \"product image\", \"object\": \"ProductImage object (1)\", \"fields\": [\"Description\"]}}, {\"changed\": {\"name\": \"product image\", \"object\": \"ProductImage object (2)\", \"fields\": [\"Description\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 17,
+  "fields": {
+    "action_time": "2026-04-24T14:30:01.095Z",
+    "user": 1,
+    "content_type": 4,
+    "object_id": "6",
+    "object_repr": "nick",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Staff status\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 18,
+  "fields": {
+    "action_time": "2026-05-04T10:30:52.534Z",
+    "user": 1,
+    "content_type": 4,
+    "object_id": "1",
+    "object_repr": "admin",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Last name\", \"Email address\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 19,
+  "fields": {
+    "action_time": "2026-05-04T15:35:35.065Z",
+    "user": 1,
+    "content_type": 7,
+    "object_id": "8",
+    "object_repr": "Order object (8)",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "auth.group",
+  "pk": 1,
+  "fields": {
+    "name": "one_group",
+    "permissions": [
+      1,
+      2,
+      3,
       4
     ]
   }
 },
 {
-  "model": "blogapp.article",
-  "pk": 12,
+  "model": "auth.group",
+  "pk": 2,
   "fields": {
-    "title": "Python vs JavaScript",
-    "content": "Comparing two of the most popular languages...",
-    "pub_date": "2026-04-28T10:34:53Z",
-    "author": 1,
-    "category": 1,
-    "tags": [
-      1,
-      2
+    "name": "two_group",
+    "permissions": [
+      17,
+      18,
+      19,
+      20
+    ]
+  }
+},
+{
+  "model": "auth.group",
+  "pk": 3,
+  "fields": {
+    "name": "profile_manager",
+    "permissions": [
+      36
+    ]
+  }
+},
+{
+  "model": "auth.group",
+  "pk": 4,
+  "fields": {
+    "name": "qwerty",
+    "permissions": [
+      21,
+      31,
+      33
+    ]
+  }
+},
+{
+  "model": "auth.group",
+  "pk": 5,
+  "fields": {
+    "name": "three_group",
+    "permissions": []
+  }
+},
+{
+  "model": "auth.group",
+  "pk": 6,
+  "fields": {
+    "name": "four_group",
+    "permissions": []
+  }
+},
+{
+  "model": "auth.user",
+  "pk": 1,
+  "fields": {
+    "password": "pbkdf2_sha256$1200000$gRKL21r6ugFOF1IChCbDIx$t0AYsOpnVKmbU4PqmoQIVi+tEO+KOyA+xEyiYaohmjk=",
+    "last_login": "2026-05-04T14:44:31.679Z",
+    "is_superuser": true,
+    "username": "admin",
+    "first_name": "Master",
+    "last_name": "Universe",
+    "email": "master@mail.com",
+    "is_staff": true,
+    "is_active": true,
+    "date_joined": "2026-04-09T09:55:37Z",
+    "groups": [],
+    "user_permissions": [
+      25
+    ]
+  }
+},
+{
+  "model": "auth.user",
+  "pk": 2,
+  "fields": {
+    "password": "pbkdf2_sha256$1200000$RWoGRnBuruOHQRmYvG1tA2$HZR5Q9jiZXh1DgQAyHcO5zwbRCtA4bWfpbm+tAsiggw=",
+    "last_login": "2026-05-04T10:26:55.727Z",
+    "is_superuser": false,
+    "username": "sam",
+    "first_name": "",
+    "last_name": "",
+    "email": "",
+    "is_staff": true,
+    "is_active": true,
+    "date_joined": "2026-04-21T11:33:18Z",
+    "groups": [
+      3,
+      4
+    ],
+    "user_permissions": [
+      4
+    ]
+  }
+},
+{
+  "model": "auth.user",
+  "pk": 3,
+  "fields": {
+    "password": "pbkdf2_sha256$1200000$et7FKpNklfgbTsnSl0prwO$lR1qNAdnf3pvMlsEQh9JF6qodhYSub05lDjIx26q+yM=",
+    "last_login": "2026-04-24T14:22:56.361Z",
+    "is_superuser": false,
+    "username": "john",
+    "first_name": "",
+    "last_name": "",
+    "email": "",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2026-04-21T11:45:00Z",
+    "groups": [],
+    "user_permissions": [
+      32
+    ]
+  }
+},
+{
+  "model": "auth.user",
+  "pk": 4,
+  "fields": {
+    "password": "pbkdf2_sha256$1200000$X4nvKXbVA4eWgj3RP3tyJY$KGAUKlpaf8fQX+vl2JkkuSYab6RKTazgNwiYO2TR0Bk=",
+    "last_login": "2026-04-21T13:02:46.473Z",
+    "is_superuser": false,
+    "username": "jane",
+    "first_name": "",
+    "last_name": "",
+    "email": "",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2026-04-21T11:47:38.778Z",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "auth.user",
+  "pk": 5,
+  "fields": {
+    "password": "pbkdf2_sha256$1200000$rsiSknwDFaVjroTaZcFUk4$V03P+MrNHev+QTvECa52kCgc3WkphzSFJPpj2Ap5xBs=",
+    "last_login": "2026-04-21T11:52:21.531Z",
+    "is_superuser": false,
+    "username": "mary",
+    "first_name": "",
+    "last_name": "",
+    "email": "",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2026-04-21T11:52:20.896Z",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "auth.user",
+  "pk": 6,
+  "fields": {
+    "password": "pbkdf2_sha256$1200000$jIssIxUInCCngxyB3PZjSE$hDdSYiDrmlXq5oGq5dNKXbFhFEzV6rpbdwqFvWrK7cM=",
+    "last_login": "2026-05-04T10:27:29.729Z",
+    "is_superuser": false,
+    "username": "nick",
+    "first_name": "",
+    "last_name": "",
+    "email": "",
+    "is_staff": true,
+    "is_active": true,
+    "date_joined": "2026-04-21T12:15:56Z",
+    "groups": [
+      3
+    ],
+    "user_permissions": [
+      4
     ]
   }
 },
@@ -674,6 +822,290 @@
     "bio": "Admin bio",
     "agreement_accepted": false,
     "avatar": ""
+  }
+},
+{
+  "model": "blogapp.author",
+  "pk": 1,
+  "fields": {
+    "name": "John Doe",
+    "bio": "American tech blogger and software engineer."
+  }
+},
+{
+  "model": "blogapp.author",
+  "pk": 2,
+  "fields": {
+    "name": "Jane Smith",
+    "bio": "Freelance writer focused on lifestyle and wellness."
+  }
+},
+{
+  "model": "blogapp.author",
+  "pk": 3,
+  "fields": {
+    "name": "Alex Johnson",
+    "bio": "Data scientist and AI enthusiast."
+  }
+},
+{
+  "model": "blogapp.author",
+  "pk": 4,
+  "fields": {
+    "name": "Maria Garcia",
+    "bio": "Travel journalist and photographer."
+  }
+},
+{
+  "model": "blogapp.author",
+  "pk": 5,
+  "fields": {
+    "name": "James Brown",
+    "bio": "Finance expert and stock market analyst."
+  }
+},
+{
+  "model": "blogapp.category",
+  "pk": 1,
+  "fields": {
+    "name": "Technology"
+  }
+},
+{
+  "model": "blogapp.category",
+  "pk": 2,
+  "fields": {
+    "name": "Lifestyle"
+  }
+},
+{
+  "model": "blogapp.category",
+  "pk": 3,
+  "fields": {
+    "name": "Finance"
+  }
+},
+{
+  "model": "blogapp.tag",
+  "pk": 1,
+  "fields": {
+    "name": "Programming"
+  }
+},
+{
+  "model": "blogapp.tag",
+  "pk": 2,
+  "fields": {
+    "name": "Python"
+  }
+},
+{
+  "model": "blogapp.tag",
+  "pk": 3,
+  "fields": {
+    "name": "Django"
+  }
+},
+{
+  "model": "blogapp.tag",
+  "pk": 4,
+  "fields": {
+    "name": "Travel"
+  }
+},
+{
+  "model": "blogapp.tag",
+  "pk": 5,
+  "fields": {
+    "name": "Health"
+  }
+},
+{
+  "model": "blogapp.tag",
+  "pk": 6,
+  "fields": {
+    "name": "Investing"
+  }
+},
+{
+  "model": "blogapp.tag",
+  "pk": 7,
+  "fields": {
+    "name": "AI"
+  }
+},
+{
+  "model": "blogapp.article",
+  "pk": 1,
+  "fields": {
+    "title": "Getting Started with Django",
+    "content": "This is a beginner guide to Django...",
+    "pub_date": "2026-04-18T16:34:53Z",
+    "author": 1,
+    "category": 1,
+    "tags": [
+      1,
+      2,
+      3
+    ]
+  }
+},
+{
+  "model": "blogapp.article",
+  "pk": 2,
+  "fields": {
+    "title": "Healthy Morning Routine",
+    "content": "How to start your day in the best way...",
+    "pub_date": "2026-04-19T16:34:53Z",
+    "author": 2,
+    "category": 2,
+    "tags": [
+      5
+    ]
+  }
+},
+{
+  "model": "blogapp.article",
+  "pk": 3,
+  "fields": {
+    "title": "Machine Learning Basics",
+    "content": "An introduction to ML concepts...",
+    "pub_date": "2026-04-20T16:34:53Z",
+    "author": 3,
+    "category": 1,
+    "tags": [
+      2,
+      7
+    ]
+  }
+},
+{
+  "model": "blogapp.article",
+  "pk": 4,
+  "fields": {
+    "title": "Budgeting for Beginners",
+    "content": "Learn how to manage your personal finances...",
+    "pub_date": "2026-04-21T16:34:53Z",
+    "author": 5,
+    "category": 3,
+    "tags": [
+      6
+    ]
+  }
+},
+{
+  "model": "blogapp.article",
+  "pk": 5,
+  "fields": {
+    "title": "My Trip to Japan",
+    "content": "A travel diary from Tokyo to Kyoto...",
+    "pub_date": "2026-04-22T16:34:53Z",
+    "author": 4,
+    "category": 2,
+    "tags": [
+      4
+    ]
+  }
+},
+{
+  "model": "blogapp.article",
+  "pk": 6,
+  "fields": {
+    "title": "Advanced Python Tricks",
+    "content": "Useful tips and tricks for Python developers...",
+    "pub_date": "2026-04-23T16:34:53Z",
+    "author": 1,
+    "category": 1,
+    "tags": [
+      1,
+      2
+    ]
+  }
+},
+{
+  "model": "blogapp.article",
+  "pk": 7,
+  "fields": {
+    "title": "Investing in ETFs",
+    "content": "Why ETFs are great for long-term growth...",
+    "pub_date": "2026-04-24T16:34:53Z",
+    "author": 5,
+    "category": 3,
+    "tags": [
+      6
+    ]
+  }
+},
+{
+  "model": "blogapp.article",
+  "pk": 8,
+  "fields": {
+    "title": "Django REST Framework Guide",
+    "content": "Building APIs with DRF...",
+    "pub_date": "2026-04-25T16:34:53Z",
+    "author": 1,
+    "category": 1,
+    "tags": [
+      1,
+      3
+    ]
+  }
+},
+{
+  "model": "blogapp.article",
+  "pk": 9,
+  "fields": {
+    "title": "Mindfulness Meditation",
+    "content": "How to practice mindfulness daily...",
+    "pub_date": "2026-04-26T16:34:53Z",
+    "author": 2,
+    "category": 2,
+    "tags": [
+      5
+    ]
+  }
+},
+{
+  "model": "blogapp.article",
+  "pk": 10,
+  "fields": {
+    "title": "Artificial Intelligence Trends 2025",
+    "content": "What to expect in the next few years...",
+    "pub_date": "2026-04-27T16:34:53Z",
+    "author": 3,
+    "category": 1,
+    "tags": [
+      7
+    ]
+  }
+},
+{
+  "model": "blogapp.article",
+  "pk": 11,
+  "fields": {
+    "title": "Solo Travel Tips",
+    "content": "Essential advice for solo adventurers...",
+    "pub_date": "2026-04-28T04:34:53Z",
+    "author": 4,
+    "category": 2,
+    "tags": [
+      4
+    ]
+  }
+},
+{
+  "model": "blogapp.article",
+  "pk": 12,
+  "fields": {
+    "title": "Python vs JavaScript",
+    "content": "Comparing two of the most popular languages...",
+    "pub_date": "2026-04-28T10:34:53Z",
+    "author": 1,
+    "category": 1,
+    "tags": [
+      1,
+      2
+    ]
   }
 }
 ]
